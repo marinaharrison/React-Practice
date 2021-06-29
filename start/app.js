@@ -70,10 +70,45 @@ const planets = [
 // =============================================================
 
 // 1: Create a 'Planet' component that renders a planet card
-
+const Planet = (props) => { //pass props to make sure it can get the data
+  return (
+    <div className="card">
+      <div>
+        <img src={props.url} alt={props.name} />
+      </div>
+      <h2>{props.name}</h2>
+      <p>{props.desc}</p>
+      <h3>Planet Profile</h3>
+      <ul>
+        <li><strong>Diameter:</strong> {props.diameter}</li>
+        <li><strong>Moons:</strong> {props.moons}</li>
+      </ul>
+    </div>
+  );
+}
 
 // 2: Create a container component that iterates over the planets array 
 //    and renders a 'Planet' component for each object in the array 
-
+const PlanetList = (props) => {
+  return (
+    <div className="container">
+      {props.planets.map( planet => 
+        <Planet 
+          name={planet.name}
+          diameter={planet.diameter}
+          moons={planet.moons}
+          desc={planet.desc}
+          url={planet.url}
+          key={planet.id} //make sure to add a key prop so react can keep track of it.
+        />
+      )}
+    </div>
+  );
+}
 
 // 3: Render the container component to the DOM
+  ReactDOM.render(
+    <PlanetList planets={planets} />, //to get the planets data into the component, 
+    //                                  we need to pass the planet's array it as props
+    document.getElementById('root') //we want to mount the component to the Root of the div as seen in index.html
+  );
